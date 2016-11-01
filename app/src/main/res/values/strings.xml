@@ -3,6 +3,11 @@
     <string name="action_settings">Settings</string>
     <string name="welcome_message">Hi, this is Shawn, and I approve of this application!</string>
     <string name="hey_guys">Erky is an inventor of mechanical things, he does things with his electrical strings.</string>
-    <string name="first_name_prompt">First name:</string>
+    <string name="first_name_prompt">Name:</string>
+    <string name="lorem_ipsum">Lorem ipsum longtest stuff here ... and more ... Lorem ipsum longtest stuff here ... and more ... Lorem ipsum longtest stuff here ... and more ... Lorem ipsum longtest stuff here ... and more ... Lorem ipsum longtest stuff here ... and more ... </string>
+    <string name="about">About</string>
+    <string name="logout">Logout</string>
+    <string name="shopping_cart">Shopping Cart</string>
+    <string name="title_activity_about">About Randomancer</string>
 
 </resources>
