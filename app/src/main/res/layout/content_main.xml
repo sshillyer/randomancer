@@ -55,23 +55,5 @@
         android:layout_alignParentRight="true"
         android:text="Submit" />
 
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/submitButton" />
-
-    <ImageView
-        android:id="@+id/photo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp"
-        android:contentDescription="Photo" />
-
-
 
 </RelativeLayout>
