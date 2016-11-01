@@ -9,5 +9,7 @@
     <string name="logout">Logout</string>
     <string name="shopping_cart">Shopping Cart</string>
     <string name="title_activity_about">About Randomancer</string>
+    <string name="about_heading">About Randomancer</string>
+    <string name="about_description">This application was created by Shawn S. Hillyer. Latest source code and documentation can always be found at https://github.com/sshillyer/randomancer</string>
 
 </resources>

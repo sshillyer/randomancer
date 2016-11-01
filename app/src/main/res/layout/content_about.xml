@@ -15,21 +15,23 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentLeft="true"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="10dp"
         android:contentDescription="Logo"
-        app:srcCompat="@drawable/randomancer_logo" />
+        app:srcCompat="@drawable/randomancer_logo"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false" />
 
     <TextView
         android:id="@+id/aboutHeadline"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/imageView"
         android:layout_marginBottom="10dp"
-        android:text="About Headline"
+        android:text="@string/about_heading"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -43,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="About this stuff"
+            android:text="@string/about_description"
             android:textStyle="bold" />
 
     </ScrollView>
