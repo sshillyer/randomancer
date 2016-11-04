@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // Handle clicking the "log in" button
-        Button button = (Button) findViewById(R.id.loginButton);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button loginButton = (Button) findViewById(R.id.loginButton);
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Extract username
@@ -45,10 +45,8 @@ public class MainActivity extends AppCompatActivity {
                 // TODO: try and log in to something!
 
                 // Go to main menu activity
-                // TODO: Make a new activity: Select menu.
                 Intent intentSelect = new Intent(MainActivity.this, MenuActivity.class);
                 startActivity(intentSelect);
-
             }
         });
 
