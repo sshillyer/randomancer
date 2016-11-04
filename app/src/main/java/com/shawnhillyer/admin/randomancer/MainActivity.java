@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Go to main menu activity
                 // TODO: Make a new activity: Select menu.
-                Intent intentSelect = new Intent(MainActivity.this, AboutActivity.class);
+                Intent intentSelect = new Intent(MainActivity.this, MenuActivity.class);
                 startActivity(intentSelect);
 
             }
