@@ -2,6 +2,7 @@ package com.shawnhillyer.admin.randomancer;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,8 +21,8 @@ import java.util.ArrayList;
 
 public class ViewCharactersActivity extends AppCompatActivity {
     protected void buildScrollList(JSONArray res) throws JSONException {
-        final TextView text = (TextView) findViewById(R.id.textView);
-        text.setText("Response is: " + res.toString());
+//        final TextView text = (TextView) findViewById(R.id.textView);
+//        text.setText("Response is: " + res.toString());
 
         // Cite: http://stackoverflow.com/questions/9440138/how-to-convert-jsonarray-to-listview
         ArrayList<String> items = new ArrayList<String>();
@@ -42,11 +43,13 @@ public class ViewCharactersActivity extends AppCompatActivity {
             JSONArray skills = character.getJSONArray("skills");
             int numSkills = skills.length();
             if (numSkills > 0) {
-                for (int j = 0; j < numSkills - 1; j++) {
-                    skillList.append(skills.getString(j));
-                    skillList.append(", ");
+                for (int j = 0; j < numSkills; j++) {
+                    JSONObject skill = skills.getJSONObject(j);
+                    String skillName = skill.getString("skill");
+                    skillList.append(skillName);
+                    if (j != numSkills -1)
+                        skillList.append(", ");
                 }
-                skillList.append(skills.getString(numSkills - 1));
             } else {
                 skillList.append("None");
             }
@@ -54,7 +57,7 @@ public class ViewCharactersActivity extends AppCompatActivity {
 
             items.add(firstName + " " + lastName + "\n"
                     + "Gender: " + gender + "\n"
-//                    + "Race: " + race + "\n"
+                    + "Race: " + race + "\n"
                     + "Skills: " + skillList);
         }
 
@@ -74,7 +77,7 @@ public class ViewCharactersActivity extends AppCompatActivity {
 
         String url = "http://52.26.146.27:8090/charmaker/characters";
 
-        final TextView text = (TextView) findViewById(R.id.textView);
+//        final TextView text = (TextView) findViewById(R.id.textView);
 
         JsonArrayRequest jsObjRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
@@ -91,7 +94,7 @@ public class ViewCharactersActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                text.setText("That didn't work!");
+//                Log.e("That didn't work!");
             }
         });
         MySingleton.getInstance(this).addToRequestQueue(jsObjRequest);
