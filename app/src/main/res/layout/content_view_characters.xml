@@ -23,4 +23,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView"
         android:layout_weight="0.46" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
 </LinearLayout>
