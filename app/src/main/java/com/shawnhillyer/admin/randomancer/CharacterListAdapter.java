@@ -17,6 +17,7 @@ public class CharacterListAdapter extends ArrayAdapter<Character> {
 
     public CharacterListAdapter(Context context, int resource, ArrayList<Character> objects) {
         super(context, resource, objects);
+        // Set the private characters object to the list of characters passed in by constructor
         characters = objects;
     }
 
@@ -28,8 +29,10 @@ public class CharacterListAdapter extends ArrayAdapter<Character> {
                     inflate(R.layout.list_item, parent, false);
         }
 
+        // This grabs the character in the position required as we move through private list of chars
         Character character = characters.get(position);
 
+        // Each pair grabs the id in the custom view passed in (convertView), then sets text content
         TextView nameText = (TextView) convertView.findViewById(R.id.fullName);
         nameText.setText(character.getFullName());
         TextView genderText = (TextView) convertView.findViewById(R.id.gender);

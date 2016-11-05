@@ -21,20 +21,21 @@ public class ViewCharactersActivity extends AppCompatActivity {
 
     protected void buildCharacterList(JSONArray res) throws JSONException {
         // Cite: http://stackoverflow.com/questions/9440138/how-to-convert-jsonarray-to-listview
-        ArrayList<String> items = new ArrayList<String>();
-
+        // Empty arraylist of characters we can pass around later
         ArrayList<Character> characters = new ArrayList<Character>();
 
+        // Iterate through the response, building Character objects from the JSON passed in
         for (int i = 0; i < res.length(); i++) {
             // Get each character object from the JSONArray
             JSONObject characterJson = res.getJSONObject(i);
             Character character = new Character(characterJson);
             characters.add(character);
-
         }
 
+        // Pass in our customer layout to our custom list adapter class constructor
         CharacterListAdapter adapter = new CharacterListAdapter(
                 this, R.layout.list_item, characters);
+        // Adapter is initialized, now find the listView and tell it to use this adapter
         ListView lv = (ListView) findViewById(R.id.listView);
         lv.setAdapter(adapter);
     }
@@ -56,8 +57,6 @@ public class ViewCharactersActivity extends AppCompatActivity {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        // Display the first 500 characters of the response string.
-//                        text.setText("Response is: " + response.toString());
                         try {
                             buildCharacterList(response);
                         } catch (JSONException e) {
