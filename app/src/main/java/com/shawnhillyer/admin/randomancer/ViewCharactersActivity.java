@@ -2,10 +2,8 @@ package com.shawnhillyer.admin.randomancer;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,50 +18,25 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class ViewCharactersActivity extends AppCompatActivity {
-    protected void buildScrollList(JSONArray res) throws JSONException {
-//        final TextView text = (TextView) findViewById(R.id.textView);
-//        text.setText("Response is: " + res.toString());
 
+    protected void buildCharacterList(JSONArray res) throws JSONException {
         // Cite: http://stackoverflow.com/questions/9440138/how-to-convert-jsonarray-to-listview
         ArrayList<String> items = new ArrayList<String>();
 
+        ArrayList<Character> characters = new ArrayList<Character>();
+
         for (int i = 0; i < res.length(); i++) {
-
             // Get each character object from the JSONArray
-            JSONObject character = res.getJSONObject(i);
+            JSONObject characterJson = res.getJSONObject(i);
+            Character character = new Character(characterJson);
+            characters.add(character);
 
-            // Get the name
-            String firstName = character.getString("firstName");
-            String lastName = character.getString("lastName");
-            String gender = character.getString("gender");
-            String race = character.getString("race");
-
-            // Build strings into an array
-            StringBuilder skillList = new StringBuilder(); // Empty array of strings
-            JSONArray skills = character.getJSONArray("skills");
-            int numSkills = skills.length();
-            if (numSkills > 0) {
-                for (int j = 0; j < numSkills; j++) {
-                    JSONObject skill = skills.getJSONObject(j);
-                    String skillName = skill.getString("skill");
-                    skillList.append(skillName);
-                    if (j != numSkills -1)
-                        skillList.append(", ");
-                }
-            } else {
-                skillList.append("None");
-            }
-
-
-            items.add(firstName + " " + lastName + "\n"
-                    + "Gender: " + gender + "\n"
-                    + "Race: " + race + "\n"
-                    + "Skills: " + skillList);
         }
 
-        ArrayAdapter<String> mArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, items);
+        CharacterListAdapter adapter = new CharacterListAdapter(
+                this, R.layout.list_item, characters);
         ListView lv = (ListView) findViewById(R.id.listView);
-        lv.setAdapter(mArrayAdapter);
+        lv.setAdapter(adapter);
     }
 
 
@@ -86,7 +59,7 @@ public class ViewCharactersActivity extends AppCompatActivity {
                         // Display the first 500 characters of the response string.
 //                        text.setText("Response is: " + response.toString());
                         try {
-                            buildScrollList(response);
+                            buildCharacterList(response);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
