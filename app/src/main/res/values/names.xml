@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="names">
+        <item>Aera</item>
+        <item>Deekek</item>
+        <item>Baern</item>
+        <item>Eberk</item>
+        <item>Audhild</item>
+        <item>Falkrunn</item>
+        <item>Torbera</item>
+        <item>Carric</item>
+        <item>Quarion</item>
+        <item>Soveliss</item>
+        <item>Theren</item>
+        <item>Feng</item>
+        <item>Henk</item>
+        <item>Imsh</item>
+        <item>Shautha</item>
+        <item>Nowhere,</item>
+        <item>Reverence,</item>
+        <item>Lerissa,</item>
+        <item>Kairon,</item>
+    </string-array>
+</resources>
