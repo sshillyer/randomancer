@@ -99,4 +99,21 @@
         android:layout_alignTop="@id/raceLabel"
         android:layout_toRightOf="@id/raceLabel" />
 
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/raceLabel">
+
+        <LinearLayout
+            android:id="@+id/skillLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/raceLabel"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:orientation="vertical"></LinearLayout>
+    </ScrollView>
+
 </RelativeLayout>

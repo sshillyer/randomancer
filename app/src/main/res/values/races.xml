@@ -3,9 +3,15 @@
     <string-array name="races">
         <item>Aarakocra</item>
         <item>Dwarf</item>
-        <item>Elf</item>
-        <item>Human</item>
-        <item>Halfling</item>
         <item>Dragonborn</item>
+        <item>Elf</item>
+        <item>Genasi</item>
+        <item>Gnome</item>
+        <item>Deep Gnome</item>
+        <item>Half-Elf</item>
+        <item>Half-Orc</item>
+        <item>Halfling</item>
+        <item>Human</item>
+        <item>Tiefling</item>
     </string-array>
 </resources>

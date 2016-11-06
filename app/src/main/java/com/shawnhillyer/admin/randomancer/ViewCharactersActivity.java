@@ -32,10 +32,10 @@ public class ViewCharactersActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+        // Send an HTTP GET rerquest to url using Volley library
         RequestQueue queue = MySingleton.getInstance(this.getApplicationContext()).
                 getRequestQueue();
-
-
         String url = "http://52.26.146.27:8090/charmaker/characters";
 
         JsonArrayRequest jsObjRequest = new JsonArrayRequest(Request.Method.GET, url, null,

@@ -28,4 +28,12 @@ public class Skill {
             e.printStackTrace();
         }
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getSkill() {
+        return skill;
+    }
 }
