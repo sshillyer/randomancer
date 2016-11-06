@@ -20,5 +20,6 @@
     <string name="first_name">First Name</string>
     <string name="gender_label">Gender</string>
     <string name="race_label">Race</string>
+    <string name="skills_label">Skills</string>
 
 </resources>
