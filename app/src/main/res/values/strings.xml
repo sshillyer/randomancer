@@ -16,5 +16,9 @@
     <string name="passwordLabel">Password</string>
     <string name="title_activity_create_character">Create Character</string>
     <string name="title_activity_view_characters">View Characters</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="gender_label">Gender</string>
+    <string name="race_label">Race</string>
 
 </resources>

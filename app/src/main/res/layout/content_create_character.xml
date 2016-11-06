@@ -14,8 +14,89 @@
     tools:showIn="@layout/activity_create_character">
 
     <TextView
+        android:id="@+id/firstNameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello from create character page"/>
+        android:layout_alignBaseline="@+id/firstNameText"
+        android:layout_alignBottom="@+id/firstNameText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="sans-serif"
+        android:text="@string/first_name" />
+
+    <EditText
+        android:id="@+id/firstNameText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/firstNameLabel"
+        android:layout_toRightOf="@+id/firstNameLabel"
+        android:ems="10"
+        android:hint="Enter a name of at least 1 letters."
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/lastNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/firstNameLabel"
+        android:layout_marginBottom="@dimen/create_char_field_space"
+        android:fontFamily="sans-serif"
+        android:text="@string/last_name" />
+
+    <EditText
+        android:id="@+id/lastNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/lastNameLabel"
+        android:layout_alignParentRight="true"
+        android:layout_toEndOf="@+id/lastNameLabel"
+        android:layout_toRightOf="@+id/lastNameLabel"
+        android:ems="10"
+        android:hint="Optional"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/genderLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/lastNameLabel"
+        android:layout_marginBottom="@dimen/create_char_field_space"
+        android:fontFamily="sans-serif"
+        android:text="@string/gender_label" />
+
+    <Spinner
+        android:id="@+id/genderSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/genderLabel"
+        android:layout_alignTop="@id/genderLabel"
+        android:layout_toRightOf="@id/genderLabel" />
+
+    <TextView
+        android:id="@+id/raceLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/genderLabel"
+        android:layout_marginBottom="@dimen/create_char_field_space"
+        android:fontFamily="sans-serif"
+        android:text="@string/race_label" />
+
+    <Spinner
+        android:id="@+id/raceSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/raceLabel"
+        android:layout_alignTop="@id/raceLabel"
+        android:layout_toRightOf="@id/raceLabel" />
 
 </RelativeLayout>

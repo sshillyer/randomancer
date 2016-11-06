@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 public class CreateCharacterActivity extends AppCompatActivity {
 
@@ -21,6 +23,19 @@ public class CreateCharacterActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // Set up gender spinner (CITE: https://developer.android.com/guide/topics/ui/controls/spinner.html
+        Spinner genderSpinner = (Spinner) findViewById(R.id.genderSpinner);
+        ArrayAdapter<CharSequence> genderAdapter = ArrayAdapter.createFromResource(this,
+                R.array.genders, android.R.layout.simple_spinner_item);
+        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        genderSpinner.setAdapter(genderAdapter);
+
+        // Set up race spinner
+        Spinner raceSpinner = (Spinner) findViewById(R.id.raceSpinner);
+        ArrayAdapter<CharSequence> raceAdapter = ArrayAdapter.createFromResource(this,
+                R.array.races, android.R.layout.simple_spinner_item);
+        raceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        raceSpinner.setAdapter(raceAdapter);
 
     }
 
