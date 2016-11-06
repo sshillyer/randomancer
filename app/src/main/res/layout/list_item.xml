@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/charListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -11,31 +12,45 @@
 
         <TextView
             android:id="@+id/fullName"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:text="fullName"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:textAlignment="center" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/fullName"
             android:text="Gender" />
 
         <TextView
             android:id="@+id/race"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/gender"
             android:text="race" />
 
         <TextView
             android:id="@+id/skills"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/race"
             android:text="skills" />
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/editButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+
+            android:text="Edit Character"
+            android:width="10dp"
+            android:textSize="10dp" />
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

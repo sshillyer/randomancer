@@ -30,8 +30,25 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.shawnhillyer.admin.randomancer.MainActivity" />
         </activity>
-        <activity android:name=".ViewCharactersActivity" />
-        <activity android:name=".MenuActivity"></activity>
+        <activity
+            android:name=".ViewCharactersActivity"
+            android:label="@string/title_activity_view_characters"
+            android:parentActivityName=".MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.shawnhillyer.admin.randomancer.MainActivity" />
+        </activity>
+        <activity android:name=".MenuActivity" />
+        <activity
+            android:name=".CreateCharacterActivity"
+            android:label="@string/title_activity_create_character"
+            android:parentActivityName=".MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.shawnhillyer.admin.randomancer.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

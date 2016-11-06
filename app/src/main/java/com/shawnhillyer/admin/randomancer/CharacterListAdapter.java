@@ -1,12 +1,15 @@
 package com.shawnhillyer.admin.randomancer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,12 +38,27 @@ public class CharacterListAdapter extends ArrayAdapter<Character> {
         // Each pair grabs the id in the custom view passed in (convertView), then sets text content
         TextView nameText = (TextView) convertView.findViewById(R.id.fullName);
         nameText.setText(character.getFullName());
+
         TextView genderText = (TextView) convertView.findViewById(R.id.gender);
         genderText.setText(character.getGender());
+
         TextView raceText = (TextView) convertView.findViewById(R.id.race);
         raceText.setText(character.getRace());
+
         TextView skillsText = (TextView) convertView.findViewById(R.id.skills);
         skillsText.setText(character.getSkills());
+
+        // TODO: Make a button with the id in it?
+        final Button button = (Button) convertView.findViewById(R.id.editButton);
+        button.setTag(character.getId());
+        button.setOnClickListener(
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO: Make the edit button navigate to an Edit Character activity instead of... this :)
+                    button.setText((CharSequence) button.getTag());
+                }
+        });
 
         return convertView;
     }
