@@ -71,13 +71,26 @@ public class CreateCharacterActivity extends AppCompatActivity {
                 // TODO: Validate input
                 sendCharacterPostRequest();
                 // TODO: Make a success toast and/or navigate to another page
-
             }
         });
 
         // Setup event listener on the randomize button to randomize the fields selected
+        Button randomButton = (Button) findViewById(R.id.randomButton);
+        randomButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                randomizeForm();
+            }
+        });
 
+        // TODO: Setup an "onShakeThePhone" event somehow that does same thing as the randomButton
 
+    }
+
+    private void randomizeForm() {
+        Toast randomToast = Toast.makeText(getApplicationContext(), "Randomizing", Toast.LENGTH_SHORT);
+        randomToast.show();
+        // TODO: Actually randomize some/all of the input
     }
 
     @Override
