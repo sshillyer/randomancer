@@ -26,7 +26,6 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +35,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public class CreateCharacterActivity extends AppCompatActivity {
+
+    private ArrayList<CheckBox> checkBoxes = new ArrayList<CheckBox>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +69,14 @@ public class CreateCharacterActivity extends AppCompatActivity {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Validate input
-                sendCharacterPostRequest();
-                // TODO: Make a success toast and/or navigate to another page
+                // Validate input before sending the POST request
+                if (inputIsValid()) {
+                    sendCharacterPostRequest();
+                    Toast successToast = Toast.makeText(getApplicationContext(), "Character Created", Toast.LENGTH_LONG);
+                    successToast.show();
+                    Intent intentSelect = new Intent(CreateCharacterActivity.this, ViewCharactersActivity.class);
+                    startActivity(intentSelect);
+                }
             }
         });
 
@@ -85,6 +91,17 @@ public class CreateCharacterActivity extends AppCompatActivity {
 
         // TODO: Setup an "onShakeThePhone" event somehow that does same thing as the randomButton
 
+    }
+
+    private boolean inputIsValid() {
+        EditText firstNameEt = (EditText) findViewById(R.id.firstNameText);
+        String firstName = firstNameEt.getText().toString();
+        if (firstName.length() < 2) {
+            Toast fNameShortToast = Toast.makeText(getApplicationContext(), R.string.first_name_min_length, Toast.LENGTH_LONG);
+            fNameShortToast.show();
+            return false;
+        }
+        return true;
     }
 
     private void randomizeForm() {
@@ -125,9 +142,6 @@ public class CreateCharacterActivity extends AppCompatActivity {
 
 
     private boolean sendCharacterPostRequest() {
-        Toast clickCreateToast = Toast.makeText(getApplicationContext(), "You clicked create!", Toast.LENGTH_LONG);
-        clickCreateToast.show();
-
         // Send an HTTP POST request to url using Volley library
 
         String url = "http://52.26.146.27:8090/charmaker/characters";
@@ -156,9 +170,17 @@ public class CreateCharacterActivity extends AppCompatActivity {
             String race = raceSpinner.getSelectedItem().toString();
             jsonBody.put("race", race);
 
-            // TODO: Get the skills that are checked by calling getTag on each checkbox?
+            // Build an ArrayList of the skill id's (hidden with setTag), put into jsonBody if checked
+            ArrayList<String> skillIdList = new ArrayList<String>();
+            for (int i = 0; i < checkBoxes.size(); i++) {
+                CheckBox cb = checkBoxes.get(i);
+                if (cb.isChecked()) {
+                    skillIdList.add((String) cb.getTag());
+                }
+            }
+            jsonBody.put("skills", new JSONArray(skillIdList));
 
-
+            // Convert the JSONObject into a string
             final String mRequestBody = jsonBody.toString();
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
@@ -247,6 +269,7 @@ public class CreateCharacterActivity extends AppCompatActivity {
                                 cb.setTextColor(getResources().getColor(R.color.colorTextSecondary));
                                 cb.setTag(skill.getId());
                                 ll.addView(cb);
+                                checkBoxes.add(cb);
                             } // End for loop that makes checkboxes
                         }
 
