@@ -26,6 +26,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.github.tbouron.shakedetector.library.ShakeDetector;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -90,7 +91,14 @@ public class CreateCharacterActivity extends AppCompatActivity {
             }
         });
 
-        // TODO: Setup an "onShakeThePhone" event somehow that does same thing as the randomButton
+        // Event listener using ShakeDetector (https://github.com/tbouron/ShakeDetector)
+        ShakeDetector.create(this, new ShakeDetector.OnShakeListener() {
+            @Override
+            public void OnShake() {
+                Toast.makeText(getApplicationContext(), "Device shaken!", Toast.LENGTH_SHORT).show();
+                randomizeForm();
+            }
+        });
 
     }
 
@@ -317,4 +325,23 @@ public class CreateCharacterActivity extends AppCompatActivity {
 
         return true;
     } // end buildSkillCheckboxes
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ShakeDetector.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        ShakeDetector.stop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ShakeDetector.destroy();
+    }
 }
