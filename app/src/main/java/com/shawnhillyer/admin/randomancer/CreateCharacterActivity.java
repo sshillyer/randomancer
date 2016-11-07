@@ -33,6 +33,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class CreateCharacterActivity extends AppCompatActivity {
 
@@ -104,10 +105,40 @@ public class CreateCharacterActivity extends AppCompatActivity {
         return true;
     }
 
-    private void randomizeForm() {
-        Toast randomToast = Toast.makeText(getApplicationContext(), "Randomizing", Toast.LENGTH_SHORT);
+    private boolean randomizeForm() {
+        Toast randomToast = Toast.makeText(getApplicationContext(), "Randomancer is Randomizing!", Toast.LENGTH_SHORT);
         randomToast.show();
-        // TODO: Actually randomize some/all of the input
+
+        // randomize the names
+        String randomFirstName = RandomAttributeGenerator.getRandomName(getApplicationContext());
+        EditText firstNameEt = (EditText) findViewById(R.id.firstNameText);
+        firstNameEt.setText(randomFirstName);
+
+        String randomLastName = RandomAttributeGenerator.getRandomName(getApplicationContext());
+        EditText lastNameEt = (EditText) findViewById(R.id.lastNameText);
+        lastNameEt.setText(randomLastName);
+
+        // Randomize the gender and race spinners
+        String randomGender = RandomAttributeGenerator.getRandomGender(getApplicationContext());
+        Spinner genderSpinner = (Spinner) findViewById(R.id.genderSpinner);
+        genderSpinner.setSelection(((ArrayAdapter) genderSpinner.getAdapter()).getPosition(randomGender));
+
+        String randomRace = RandomAttributeGenerator.getRandomRace(getApplicationContext());
+        Spinner raceSpinner = (Spinner) findViewById(R.id.raceSpinner);
+        raceSpinner.setSelection(((ArrayAdapter) raceSpinner.getAdapter()).getPosition(randomRace));
+
+        // Randomly toggle the skills
+        for (int i = 0; i < checkBoxes.size(); i++) {
+            int denom = new Random().nextInt(4); // Should check about 1/4 of the values
+            Boolean isChecked = false;
+            if (denom == 1) {
+                isChecked = true;
+            }
+            checkBoxes.get(i).setChecked(isChecked);
+
+        }
+
+        return true;
     }
 
     @Override
