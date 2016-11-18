@@ -68,6 +68,17 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
+        // View Characters button
+        Button viewCharactersButton = (Button) findViewById(R.id.createAccountButton);
+        viewCharactersButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Go to create user page
+                Intent intentSelect = new Intent(MainActivity.this, CreateAccountActivity.class);
+                startActivity(intentSelect);
+            }
+        });
+
         return true;
     }
 
