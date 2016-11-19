@@ -181,10 +181,6 @@ public class CreateCharacterActivity extends AppCompatActivity {
 
 
     private boolean sendCharacterPostRequest() {
-        // Send an HTTP POST request to url using Volley library
-
-        String url = "http://52.26.146.27:8090/charmaker/characters";
-
         // Read all the data from the "form"
         // Cite: http://stackoverflow.com/questions/33573803/how-to-send-a-post-request-using-volley-with-string-body
         try {

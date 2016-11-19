@@ -14,6 +14,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
 
     private CoordinatorLayout coordinatorLayout;
@@ -42,11 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 EditText passwordEt = (EditText) findViewById(R.id.passwordText);
                 String password = passwordEt.getText().toString();
 
-                // TODO: try and log in to something!
-
-                // Go to main menu activity
-                Intent intentSelect = new Intent(MainActivity.this, MenuActivity.class);
-                startActivity(intentSelect);
+                sendUserLoginPostRequest(username, password);
             }
         });
 
@@ -68,9 +74,9 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        // View Characters button
-        Button viewCharactersButton = (Button) findViewById(R.id.createAccountButton);
-        viewCharactersButton.setOnClickListener(new View.OnClickListener() {
+        // Create Account button
+        Button createAccountButton = (Button) findViewById(R.id.createAccountButton);
+        createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Go to create user page
@@ -109,4 +115,41 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+
+
+    private boolean sendUserLoginPostRequest(String username, String password) {
+
+        // Trying pattern here this time: http://arnab.ch/blog/2013/08/asynchronous-http-requests-in-android-using-volley/
+        String url = "http://52.26.146.27:8090/charmaker/users/login";
+
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("username", username);
+        params.put("password", password);
+
+        JsonObjectRequest req = new JsonObjectRequest(url, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            VolleyLog.v("Response:%n %s", response.toString(4));
+                            Toast.makeText(MainActivity.this, "Logging In", Toast.LENGTH_SHORT).show();
+                            Intent intentSelect = new Intent(MainActivity.this, MenuActivity.class);
+                            startActivity(intentSelect);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.e("Error: ", error.getMessage());
+                Toast.makeText(MainActivity.this, "Username or password incorrect", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        MySingleton.getInstance(this).addToRequestQueue(req);
+
+        return true;
+    }
 }
