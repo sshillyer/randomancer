@@ -33,8 +33,6 @@ public class Character {
 
 
         // Build skills into an array
-        JSONArray skills = character.getJSONArray("skills");
-
         JSONArray skillArray = new JSONArray();
         try {
             skillArray = character.getJSONArray("skills");
@@ -57,10 +55,6 @@ public class Character {
                 skillList.append(skillName);
                 if (j != numSkills - 1)
                     skillList.append(", ");
-
-                // Also populate the character with raw JSONArray skill data
-//                Skill skillObj = new Skill(skill.getString("_id"), skillName);
-//                this.skillObjs.add(skillObj);
             }
         } else {
             skillList.append("None");

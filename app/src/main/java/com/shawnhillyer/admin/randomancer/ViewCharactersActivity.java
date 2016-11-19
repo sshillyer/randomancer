@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -36,15 +37,24 @@ public class ViewCharactersActivity extends AppCompatActivity {
         // Send an HTTP GET rerquest to url using Volley library
         RequestQueue queue = MySingleton.getInstance(this.getApplicationContext()).
                 getRequestQueue();
-        String url = "http://52.26.146.27:8090/charmaker/characters";
+        StringBuilder urlBuilder = new StringBuilder("http://52.26.146.27:8090/charmaker/users/");
+        urlBuilder.append(User.getInstance().getUsername());
+        urlBuilder.append("/characters");
+        String url = urlBuilder.toString();
+//        String url = "http://52.26.146.27:8090/charmaker/characters";
+//        String url = "http://52.26.146.27:8090/charmaker/users/shawn3/characters";
+//        Toast.makeText(this, url, Toast.LENGTH_LONG).show();
+
 
         JsonArrayRequest jsObjRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
+//                            Toast.makeText(ViewCharactersActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
                             buildCharacterList(response);
                         } catch (JSONException e) {
+                            Toast.makeText(ViewCharactersActivity.this, e.toString(), Toast.LENGTH_LONG).show();
                             e.printStackTrace();
                         }
                     }
@@ -69,18 +79,11 @@ public class ViewCharactersActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
 
         switch(id) {
             case R.id.action_logout:
-                // TODO: Add prompt "are you sure want to log out"
-                // TODO: Actually log user out
-                // TODO: Note the above doesn't apply for assignment 4
+                User.getInstance().clearUsername();
                 Intent intentLogout = new Intent(this, MainActivity.class);
                 startActivity(intentLogout);
                 return true;
@@ -93,7 +96,7 @@ public class ViewCharactersActivity extends AppCompatActivity {
     protected void buildCharacterList(JSONArray res) throws JSONException {
         // Cite: http://stackoverflow.com/questions/9440138/how-to-convert-jsonarray-to-listview
         // Empty arraylist of characters we can pass around later
-        ArrayList<Character> characters = new ArrayList<Character>();
+        ArrayList<Character> characters = new ArrayList<>();
 
         // Iterate through the response, building Character objects from the JSON passed in
         for (int i = 0; i < res.length(); i++) {
@@ -111,36 +114,3 @@ public class ViewCharactersActivity extends AppCompatActivity {
         lv.setAdapter(adapter);
     }
 }
-
-
-// Request a string response from the provided URL.
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        // Display the first 500 characters of the response string.
-//                        text.setText("Response is: " + response.substring(0, 500));
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                text.setText("That didn't work!");
-//            }
-//        });
-//        MySingleton.getInstance(this).addToRequestQueue(stringRequest);
-
-
-//        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url, null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        // Display the first 500 characters of the response string.
-//                        text.setText("Response is: " + response.toString());
-//                    }
-//                }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        text.setText("That didn't work!");
-//                    }
-//        });
-//        MySingleton.getInstance(this).addToRequestQueue(jsObjRequest);

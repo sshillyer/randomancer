@@ -31,9 +31,7 @@ public class MenuActivity extends AppCompatActivity {
 
         switch(id) {
             case R.id.action_logout:
-                // TODO: Add prompt "are you sure want to log out"
-                // TODO: Actually log user out
-                // TODO: Note the above doesn't apply for assignment 4
+                User.getInstance().clearUsername();
                 Intent intentLogout = new Intent(this, MainActivity.class);
                 startActivity(intentLogout);
                 return true;

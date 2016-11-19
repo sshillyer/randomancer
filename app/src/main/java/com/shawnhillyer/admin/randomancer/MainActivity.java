@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d("MainActivity", "onCreate");
-        
+
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -60,16 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            Toast.makeText(MainActivity.this, "Your orientation is portrait", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(MainActivity.this, "Your orientation is landscape", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -88,6 +78,11 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    protected void onResume() {
+        User.getInstance().clearUsername();
+        super.onResume();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -104,9 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intentAbout);
                 return true;
             case R.id.action_logout:
-                // TODO: Add prompt "are you sure want to log out"
-                // TODO: Actually log user out
-                // TODO: Note the above doesn't apply for assignment 4
+                User.getInstance().clearUsername();
                 Intent intentLogout = new Intent(this, MainActivity.class);
                 startActivity(intentLogout);
                 return true;
@@ -130,11 +123,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            // Set the username
+                            User.getInstance().setUsername(username);
+
                             VolleyLog.v("Response:%n %s", response.toString(4));
                             Toast.makeText(MainActivity.this, "Logging in to " + User.getInstance().getUsername(), Toast.LENGTH_SHORT).show();
 
-                            // Set the username
-                            User.getInstance().setUsername(username);
 
                             // Go to the menu activity
                             Intent intentSelect = new Intent(MainActivity.this, MenuActivity.class);

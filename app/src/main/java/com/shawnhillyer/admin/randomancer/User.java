@@ -19,7 +19,7 @@ public class User {
         this.username = username;
     }
 
-    public void clearUsername(String username) {
+    public void clearUsername() {
         this.username = null;
     }
 
