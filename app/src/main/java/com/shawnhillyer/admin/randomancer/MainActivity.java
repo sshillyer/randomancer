@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d("MainActivity", "onCreate");
-
+        
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -115,10 +115,8 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-
-
-    private boolean sendUserLoginPostRequest(String username, String password) {
+    // Send the username and password to server and attempt to log in
+    private boolean sendUserLoginPostRequest(final String username, String password) {
 
         // Trying pattern here this time: http://arnab.ch/blog/2013/08/asynchronous-http-requests-in-android-using-volley/
         String url = "http://52.26.146.27:8090/charmaker/users/login";
@@ -133,7 +131,12 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             VolleyLog.v("Response:%n %s", response.toString(4));
-                            Toast.makeText(MainActivity.this, "Logging In", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Logging in to " + User.getInstance().getUsername(), Toast.LENGTH_SHORT).show();
+
+                            // Set the username
+                            User.getInstance().setUsername(username);
+
+                            // Go to the menu activity
                             Intent intentSelect = new Intent(MainActivity.this, MenuActivity.class);
                             startActivity(intentSelect);
                         } catch (JSONException e) {
