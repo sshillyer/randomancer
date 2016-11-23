@@ -41,9 +41,6 @@ public class ViewCharactersActivity extends AppCompatActivity {
         urlBuilder.append(User.getInstance().getUsername());
         urlBuilder.append("/characters");
         String url = urlBuilder.toString();
-//        String url = "http://52.26.146.27:8090/charmaker/characters";
-//        String url = "http://52.26.146.27:8090/charmaker/users/shawn3/characters";
-//        Toast.makeText(this, url, Toast.LENGTH_LONG).show();
 
 
         JsonArrayRequest jsObjRequest = new JsonArrayRequest(Request.Method.GET, url, null,

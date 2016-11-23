@@ -48,17 +48,30 @@ public class CharacterListAdapter extends ArrayAdapter<Character> {
         TextView skillsText = (TextView) convertView.findViewById(R.id.skills);
         skillsText.setText(character.getSkills());
 
-        // TODO: Make a button with the id in it?
-        final Button button = (Button) convertView.findViewById(R.id.editButton);
-        button.setTag(character.getId());
-        button.setOnClickListener(
+        // Edit button
+        final Button editButton = (Button) convertView.findViewById(R.id.editButton);
+        editButton.setTag(character.getId());
+        editButton.setOnClickListener(
             new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // TODO: Make the edit button navigate to an Edit Character activity instead of... this :)
-                    button.setText((CharSequence) button.getTag());
+                    editButton.setText((CharSequence) editButton.getTag());
                 }
         });
+
+        // Delete button
+        final Button deleteButton = (Button) convertView.findViewById(R.id.deleteButton);
+        deleteButton.setTag(character.getId());
+        deleteButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // TODO: Make the edit button navigate to an Edit Character activity instead of... this :)
+                        deleteButton.setText((CharSequence) deleteButton.getTag());
+                        
+                    }
+                });
 
         return convertView;
     }
