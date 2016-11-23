@@ -2,6 +2,8 @@ package com.shawnhillyer.admin.randomancer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -36,14 +38,14 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class CreateCharacterActivity extends AppCompatActivity {
+public class EditCharacterActivity extends AppCompatActivity {
 
     private ArrayList<CheckBox> checkBoxes = new ArrayList<CheckBox>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_character);
+        setContentView(R.layout.activity_edit_character);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -66,9 +68,9 @@ public class CreateCharacterActivity extends AppCompatActivity {
         // Call method that sends HTTP GET request to API /skills and builds checkboxes for skills
         buildSkillCheckboxes();
 
-        // Setup event listener on the create character button to collect the data and send POST
-        Button createButton = (Button) findViewById(R.id.saveButton);
-        createButton.setOnClickListener(new View.OnClickListener() {
+        // Setup event listener on the save character button to collect the data and send POST
+        Button saveButton = (Button) findViewById(R.id.saveButton);
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Validate input before sending the POST request
@@ -76,7 +78,7 @@ public class CreateCharacterActivity extends AppCompatActivity {
                     sendCharacterPostRequest();
                     Toast successToast = Toast.makeText(getApplicationContext(), "Character Created", Toast.LENGTH_LONG);
                     successToast.show();
-                    Intent intentSelect = new Intent(CreateCharacterActivity.this, ViewCharactersActivity.class);
+                    Intent intentSelect = new Intent(EditCharacterActivity.this, ViewCharactersActivity.class);
                     startActivity(intentSelect);
                 }
             }
@@ -99,6 +101,8 @@ public class CreateCharacterActivity extends AppCompatActivity {
                 randomizeForm();
             }
         });
+
+        loadCharacterData();
 
     }
 
@@ -149,6 +153,42 @@ public class CreateCharacterActivity extends AppCompatActivity {
         return true;
     }
 
+    private boolean loadCharacterData() {
+        Toast randomToast = Toast.makeText(getApplicationContext(), "Loading character " + getIntent().getExtras().getString("charId"), Toast.LENGTH_SHORT);
+        randomToast.show();
+
+        // set the names
+        String firstName = "unit";
+        EditText firstNameEt = (EditText) findViewById(R.id.firstNameText);
+        firstNameEt.setText(firstName);
+
+        String lastName = "Test";
+        EditText lastNameEt = (EditText) findViewById(R.id.lastNameText);
+        lastNameEt.setText(lastName);
+
+        // Set the gender and race spinners
+        String gender = "Other";
+        Spinner genderSpinner = (Spinner) findViewById(R.id.genderSpinner);
+        genderSpinner.setSelection(((ArrayAdapter) genderSpinner.getAdapter()).getPosition(gender));
+
+        String race = "Elf";
+        Spinner raceSpinner = (Spinner) findViewById(R.id.raceSpinner);
+        raceSpinner.setSelection(((ArrayAdapter) raceSpinner.getAdapter()).getPosition(race));
+
+        // Set the skills
+//        for (int i = 0; i < checkBoxes.size(); i++) {
+//            int denom = new Random().nextInt(4); // Should check about 1/4 of the values
+//            Boolean isChecked = false;
+//            if (denom == 1) {
+//                isChecked = true;
+//            }
+//            checkBoxes.get(i).setChecked(isChecked);
+//
+//        }
+
+        return true;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -168,9 +208,6 @@ public class CreateCharacterActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_logout:
-                // TODO: Add prompt "are you sure want to log out"
-                // TODO: Actually log user out
-                // TODO: Note the above doesn't apply for assignment 4
                 Intent intentLogout = new Intent(this, MainActivity.class);
                 startActivity(intentLogout);
                 return true;

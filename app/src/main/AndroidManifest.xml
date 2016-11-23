@@ -58,6 +58,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.shawnhillyer.admin.randomancer.MainActivity" />
         </activity>
+        <activity
+            android:name=".EditCharacterActivity"
+            android:label="@string/title_activity_edit_character"
+            android:parentActivityName=".ViewCharactersActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.shawnhillyer.admin.randomancer.ViewCharactersActivity" />
+        </activity>
     </application>
 
 </manifest>

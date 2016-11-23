@@ -25,5 +25,6 @@
     <string name="password_label">Password</string>
     <string name="password_hint">Minimum 5 characters</string>
     <string name="username_hint">Minimum 5 characters</string>
+    <string name="title_activity_edit_character">EditCharacterActivity</string>
 
 </resources>
