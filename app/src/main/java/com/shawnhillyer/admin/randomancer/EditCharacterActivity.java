@@ -2,8 +2,6 @@ package com.shawnhillyer.admin.randomancer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -75,7 +73,7 @@ public class EditCharacterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Validate input before sending the POST request
                 if (inputIsValid()) {
-                    sendCharacterPostRequest();
+                    sendCharacterPutRequest();
                     Toast successToast = Toast.makeText(getApplicationContext(), "Character Created", Toast.LENGTH_LONG);
                     successToast.show();
                     Intent intentSelect = new Intent(EditCharacterActivity.this, ViewCharactersActivity.class);
@@ -217,7 +215,7 @@ public class EditCharacterActivity extends AppCompatActivity {
     }
 
 
-    private boolean sendCharacterPostRequest() {
+    private boolean sendCharacterPutRequest() {
         // Read all the data from the "form"
         // Cite: http://stackoverflow.com/questions/33573803/how-to-send-a-post-request-using-volley-with-string-body
         try {
@@ -225,7 +223,8 @@ public class EditCharacterActivity extends AppCompatActivity {
                     getRequestQueue();
             StringBuilder urlBuilder = new StringBuilder("http://52.26.146.27:8090/charmaker/users/");
             urlBuilder.append(User.getInstance().getUsername());
-            urlBuilder.append("/characters");
+            urlBuilder.append("/characters/");
+            urlBuilder.append(getIntent().getExtras().getString("charId"));
             String url = urlBuilder.toString();
 
             JSONObject jsonBody = new JSONObject();
@@ -259,7 +258,7 @@ public class EditCharacterActivity extends AppCompatActivity {
             // Convert the JSONObject into a string
             final String mRequestBody = jsonBody.toString();
 
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            StringRequest stringRequest = new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Log.i("VOLLEY", response);
