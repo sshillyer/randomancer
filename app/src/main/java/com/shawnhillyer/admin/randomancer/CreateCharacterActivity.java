@@ -186,7 +186,11 @@ public class CreateCharacterActivity extends AppCompatActivity {
         try {
             RequestQueue requestQueue = MySingleton.getInstance(this.getApplicationContext()).
                     getRequestQueue();
-            String URL = "http://52.26.146.27:8090/charmaker/characters";
+            StringBuilder urlBuilder = new StringBuilder("http://52.26.146.27:8090/charmaker/users/");
+            urlBuilder.append(User.getInstance().getUsername());
+            urlBuilder.append("/characters");
+            String url = urlBuilder.toString();
+
             JSONObject jsonBody = new JSONObject();
 
             EditText firstNameEt = (EditText) findViewById(R.id.firstNameText);
@@ -218,7 +222,7 @@ public class CreateCharacterActivity extends AppCompatActivity {
             // Convert the JSONObject into a string
             final String mRequestBody = jsonBody.toString();
 
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Log.i("VOLLEY", response);
