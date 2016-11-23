@@ -48,7 +48,6 @@ public class ViewCharactersActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
-//                            Toast.makeText(ViewCharactersActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
                             buildCharacterList(response);
                         } catch (JSONException e) {
                             Toast.makeText(ViewCharactersActivity.this, e.toString(), Toast.LENGTH_LONG).show();

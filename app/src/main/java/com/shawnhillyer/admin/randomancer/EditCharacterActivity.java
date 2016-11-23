@@ -25,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.github.tbouron.shakedetector.library.ShakeDetector;
 
@@ -95,7 +96,6 @@ public class EditCharacterActivity extends AppCompatActivity {
         ShakeDetector.create(this, new ShakeDetector.OnShakeListener() {
             @Override
             public void OnShake() {
-                Toast.makeText(getApplicationContext(), "Randomancing!", Toast.LENGTH_SHORT).show();
                 randomizeForm();
             }
         });
@@ -155,34 +155,82 @@ public class EditCharacterActivity extends AppCompatActivity {
         Toast randomToast = Toast.makeText(getApplicationContext(), "Loading character " + getIntent().getExtras().getString("charId"), Toast.LENGTH_SHORT);
         randomToast.show();
 
-        // set the names
-        String firstName = "unit";
-        EditText firstNameEt = (EditText) findViewById(R.id.firstNameText);
-        firstNameEt.setText(firstName);
+        RequestQueue queue = MySingleton.getInstance(this.getApplicationContext()).
+                getRequestQueue();
+        StringBuilder urlBuilder = new StringBuilder("http://52.26.146.27:8090/charmaker/users/");
+        urlBuilder.append(User.getInstance().getUsername());
+        urlBuilder.append("/characters/");
+        urlBuilder.append(getIntent().getExtras().getString("charId"));
+        String url = urlBuilder.toString();
 
-        String lastName = "Test";
-        EditText lastNameEt = (EditText) findViewById(R.id.lastNameText);
-        lastNameEt.setText(lastName);
 
-        // Set the gender and race spinners
-        String gender = "Other";
-        Spinner genderSpinner = (Spinner) findViewById(R.id.genderSpinner);
-        genderSpinner.setSelection(((ArrayAdapter) genderSpinner.getAdapter()).getPosition(gender));
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+//                        Toast.makeText(EditCharacterActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
 
-        String race = "Elf";
-        Spinner raceSpinner = (Spinner) findViewById(R.id.raceSpinner);
-        raceSpinner.setSelection(((ArrayAdapter) raceSpinner.getAdapter()).getPosition(race));
+                        // set the names
+                        String firstName = null;
+                        String lastName = null;
+                        String gender = null;
+                        String race = null;
+                        JSONArray skills = null;
+                        try {
+                            firstName = response.getString("firstName");
+                            lastName = response.getString("lastName");
+                            gender = response.getString("gender");
+                            race = response.getString("race");
+                            skills = response.getJSONArray("skills");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
-        // Set the skills
-//        for (int i = 0; i < checkBoxes.size(); i++) {
-//            int denom = new Random().nextInt(4); // Should check about 1/4 of the values
-//            Boolean isChecked = false;
-//            if (denom == 1) {
-//                isChecked = true;
-//            }
-//            checkBoxes.get(i).setChecked(isChecked);
-//
-//        }
+                        // Set the names
+                        EditText firstNameEt = (EditText) findViewById(R.id.firstNameText);
+                        firstNameEt.setText(firstName);
+
+                        EditText lastNameEt = (EditText) findViewById(R.id.lastNameText);
+                        lastNameEt.setText(lastName);
+
+                        // Set the gender and race spinners
+                        Spinner genderSpinner = (Spinner) findViewById(R.id.genderSpinner);
+                        genderSpinner.setSelection(((ArrayAdapter) genderSpinner.getAdapter()).getPosition(gender));
+
+                        Spinner raceSpinner = (Spinner) findViewById(R.id.raceSpinner);
+                        raceSpinner.setSelection(((ArrayAdapter) raceSpinner.getAdapter()).getPosition(race));
+
+                        // Set the skills
+                        for (int i = 0; i < skills.length(); i++) {
+                            try {
+                                JSONObject skill = skills.getJSONObject(i);
+                                String skillId = skill.getString("_id");
+//                                String skillId = skill.getString("_id");
+                                for (int j = 0; j < checkBoxes.size(); j++) {
+                                    CheckBox cb = checkBoxes.get(j);
+                                    Toast.makeText(EditCharacterActivity.this, cb.getTag().toString(), Toast.LENGTH_SHORT).show();
+                                    if (cb.getTag().toString().equals(skillId)) {
+                                        cb.setChecked(true);
+                                    }
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+//                Log.e("That didn't work!");
+            }
+        });
+
+        MySingleton.getInstance(this).addToRequestQueue(jsObjRequest);
+
+
+
 
         return true;
     }
